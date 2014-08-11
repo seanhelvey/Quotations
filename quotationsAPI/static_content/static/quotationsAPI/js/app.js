@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+	//GET
 	function get_quotations() {
 		$.get( "/quotations/", function( data ) {
 			results = data['results'];
@@ -10,6 +11,7 @@ $( document ).ready(function() {
 		});		
 	}
 
+	//POST
 	var csrftoken = $.cookie('csrftoken');
 	function csrfSafeMethod(method) {
 	    // these HTTP methods do not require CSRF protection
@@ -23,21 +25,15 @@ $( document ).ready(function() {
 	    }
 	});
 
-	//POST
 	$( "#quote_form" ).submit(function(e) {
-
-		//prevent submission
-		e.preventDefault();
-
+		e.preventDefault(); //prevent submission
 		$.ajax({
 			type: "POST",
 			url: "/quotations/",
 			data: $( "#quote_form" ).serialize(),
 			success: function() { get_quotations(); }
 		});
-
-		//avoid redirection
-		return false;
+		return false; //avoid redirection
 	});	
 
 	get_quotations();
