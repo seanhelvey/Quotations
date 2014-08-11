@@ -10,13 +10,24 @@ ADD QUOTE
 <form action="/quotations/" method="post" id="quote_form">
     {% csrf_token %}
     Text: <input type="text" name="text"><br />
-    Author: <input type="text" name="author"><br />
-    <input type="submit" name="add_quote" value="add_quote">
+    Author: <select name="author" id="author_select_1">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select><br/>
+    Subject: <select name="subject" id="subject_select_1">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select><br/>    
+    <input type="submit" name="add" value="add">
 </form>
 <br />
 
 ADD AUTHOR
-<form action="." method="post">
+<form action="/authors/" method="post" id="author_form">
     {% csrf_token %}
     First Name: <input type="text" name="first_name"><br />
     Last Name: <input type="text" name="last_name"><br />    
@@ -25,14 +36,30 @@ ADD AUTHOR
 <br />
 
 ADD SUBJECT
-<form action="." method="post">
+<form action="/subjects/" method="post" id="subject_form">
     {% csrf_token %}
     Name: <input type="text" name="name"><br />
     <input type="submit" name="add" value="add">
 </form>
 <br />
 
-YOUR QUOTES
+QUOTES
+<form action="/quotations/" method="get" id="quote_select_form">
+    {% csrf_token %}
+    Author: <select name="author" id="author_select_2">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select><br/>
+    Subject: <select name="subject" id="subject_select_2">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select><br/>    
+    <input type="submit" name="filter" value="filter">
+</form>
 <div class="container">
 <ul id="quotelist"></ul>
 </div>
