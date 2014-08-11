@@ -6,11 +6,39 @@
 </head>
 <body>
 
+ADD QUOTE
+<form action="/quotations/" method="post" id="quote_form">
+    {% csrf_token %}
+    Text: <input type="text" name="text"><br />
+    Author: <input type="text" name="author"><br />
+    <input type="submit" name="add_quote" value="add_quote">
+</form>
+<br />
+
+ADD AUTHOR
+<form action="." method="post">
+    {% csrf_token %}
+    First Name: <input type="text" name="first_name"><br />
+    Last Name: <input type="text" name="last_name"><br />    
+    <input type="submit" name="add" value="add">
+</form>
+<br />
+
+ADD SUBJECT
+<form action="." method="post">
+    {% csrf_token %}
+    Name: <input type="text" name="name"><br />
+    <input type="submit" name="add" value="add">
+</form>
+<br />
+
+YOUR QUOTES
 <div class="container">
-hi
+<ul id="quotelist"></ul>
 </div>
 
 <script src="{% static 'quotationsAPI/js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'quotationsAPI/js/jquery.cookie.js' %}"></script>
 <script src="{% static 'quotationsAPI/js/app.js' %}"></script>
 </body>
 </html>
