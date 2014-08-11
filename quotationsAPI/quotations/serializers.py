@@ -22,15 +22,13 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class QuoteSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Quote
         fields = ('id', 'text', 'author')
 
 
 class SubjectSerializer(serializers.ModelSerializer):
-    quotes = serializers.HyperlinkedRelatedField(many=True, read_only=True,
-                                                 view_name='quote-detail')
+    quotes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Subject
