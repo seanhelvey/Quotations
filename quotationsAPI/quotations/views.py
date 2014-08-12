@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from quotations.serializers import UserSerializer, GroupSerializer
 from quotations.models import Author, Quote, Subject
@@ -37,16 +38,18 @@ class QuoteViewSet(viewsets.ModelViewSet):
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
 
-    def get_queryset(self):
-        author = self.request.GET.get('author', '1')
-        author_qs = Author.objects.filter(pk=author)
+    def get_queryset(self):   
+        if self.request.GET.get('author'):     
+            author = self.request.GET.get('author', '1')
+            author_qs = Author.objects.get(pk=author)
 
-        subject = self.request.GET.get('subject', '1')
-        subject_qs = Subject.objects.filter(pk=subject)
+            subject = self.request.GET.get('subject', '1')
+            subject_qs = Subject.objects.get(pk=subject)
 
-        quote_qs = Quote.objects.filter(author=author_qs)
-        return quote_qs
-
+            # quote_qs = Quote.objects.filter(author=author_qs)
+            return subject_qs.quotes.filter(author=author_qs)
+        else:
+            return Quote.objects.all()
 
 class SubjectViewSet(viewsets.ModelViewSet):
     """
@@ -55,4 +58,20 @@ class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
-     
+    def create(self, request):
+        if self.request.DATA.get('text'):
+            author = self.request.DATA.get('author', '1')
+            author_qs = Author.objects.get(pk=author)
+
+            quote = self.request.DATA.get('text', '')
+            quote_qs = Quote.objects.create(text=quote, author=author_qs)
+
+            subject = self.request.DATA.get('name', '1')
+            subject_qs = Subject.objects.get(pk=subject)
+
+            return_qs = subject_qs.quotes.add(quote_qs)
+            return Response({"message":"quote added to subject"})
+        else:
+            Subject.objects.create(name=request.DATA.get('name')) #not getting name
+            return Response({"message":"subject created"})
+

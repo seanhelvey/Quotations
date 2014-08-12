@@ -64,10 +64,11 @@ $( document ).ready(function() {
 		e.preventDefault(); //prevent submission
 		$.ajax({
 			type: "POST",
-			url: "/quotations/",
-			data: $( "#quote_form" ).serialize(),
+			url: "/subjects/", //this is how we add quote to subject manytomany
+			data: {text: $("#add_quote_text").val(), name: $("#subject_select_1").val(), author: $("#author_select_1").val()},
 			success: function() { get_quotations(); }
 		});	
+
 		return false; //avoid redirection
 	});	
 
