@@ -11,8 +11,13 @@ $( document ).ready(function() {
 	}
 
 	//GET
-	function get_quotations() {
-		$.get( "/quotations/", function( data ) {
+	function get_quotations(url) {
+		if(arguments.length == 1) {
+			url = url;
+		} else {
+			url = "/quotations/";
+		}
+		$.get( url, function( data ) {
 			results = data['results'];
 			$("li").remove();			
 			for (var i=0; i<results.length; i++) {
@@ -62,7 +67,7 @@ $( document ).ready(function() {
 			url: "/quotations/",
 			data: $( "#quote_form" ).serialize(),
 			success: function() { get_quotations(); }
-		});
+		});	
 		return false; //avoid redirection
 	});	
 
@@ -91,12 +96,7 @@ $( document ).ready(function() {
 
 	$( "#quote_select_form" ).submit(function(e) {
 		e.preventDefault(); //prevent submission
-		$.ajax({
-			type: "GET",
-			url: "/quotations/",
-			data: $( "#quote_select_form" ).serialize(),
-			success: function() { get_quotations();}
-		});
+		get_quotations("/quotations/?author=" + $("#author_select_2").val() + "&subject=" + $("#subject_select_2").val());
 		return false; //avoid redirection
 	});		
 

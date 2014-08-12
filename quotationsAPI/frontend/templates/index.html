@@ -9,18 +9,10 @@
 ADD QUOTE
 <form action="/quotations/" method="post" id="quote_form">
     {% csrf_token %}
-    Text: <input type="text" name="text"><br />
+    Text: <input type="text" name="text" id="add_quote_text"><br />
     Author: <select name="author" id="author_select_1">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
     </select><br/>
     Subject: <select name="subject" id="subject_select_1">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
     </select><br/>    
     <input type="submit" name="add" value="add">
 </form>
@@ -47,16 +39,8 @@ QUOTES
 <form action="/quotations/" method="get" id="quote_select_form">
     {% csrf_token %}
     Author: <select name="author" id="author_select_2">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
     </select><br/>
     Subject: <select name="subject" id="subject_select_2">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
     </select><br/>    
     <input type="submit" name="filter" value="filter">
 </form>
