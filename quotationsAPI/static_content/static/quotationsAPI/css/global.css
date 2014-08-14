@@ -3,20 +3,55 @@
 body { 
     padding-top: 10px; 
     font-family: 'Lato', sans-serif;
+    background-color: grey;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bree Serif', serif;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
 }
+
+h2 {
+    margin-bottom: 15px;    
+}
+
+.wrapper {
+    width: 100%; /* RWD */
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+    border-style: solid;    
+    border-width: 0px;
+    border-color: black;    
+    display: inline-block;
+}
+
 
 .container {
     width: 90%; /* RWD */
     max-width: 1024px;
     margin: 0 auto;
+    padding: 15px;
     text-align: center;
-    border-style: solid;    
+/*    border-style: solid;    
     border-width: 2px;
-    border-color: black;    
+    border-color: black;  */  
+    display: inline-block;
+    background-color: #AAEEEE;
+}
+
+.quotecontainer {
+    width: 90%; /* RWD */
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+/*    border-style: solid;    
+    border-width: 2px;
+    border-color: black;  */
+    display: inline-block;
+    background-color: white;
+    background-color: #EEAAAA;        
 }
 
 a {
@@ -75,18 +110,6 @@ a {
 
 /* iPad */
 @media screen and (max-width: 1024px) {
-/*    body {
-        background: lime;
-    }*/
-    .container {width: 80%;}
-    .column {width: 25%;}
-}
-
-/* iPhone */
-@media screen and (max-width: 480px) {
-/*    body {
-        background: red;        
-    }*/
     .container {width: 90%;}  /* to avoid wrapping */
     .column {width: 80%; float: none; margin: 0 auto;}
     #hero {height: 300px; background-size: contain;}

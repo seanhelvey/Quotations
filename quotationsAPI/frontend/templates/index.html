@@ -2,10 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Erhmagerd</title>
+    <title>Quotations</title>
+    <link rel="stylesheet" href="{% static 'quotationsAPI/css/reset.css' %}"/>    
+    <link rel="stylesheet" href="{% static 'quotationsAPI/css/global.css' %}"/>        
 </head>
 <body>
 
+<div class="wrapper">
+<section class="container">
+<h1>Quotations</h1>
+<h2>Single-Page App Juxtaposition</h2>
+<section class="column">
 ADD QUOTE
 <form action="/quotations/" method="post" id="quote_form">
     {% csrf_token %}
@@ -16,8 +23,9 @@ ADD QUOTE
     </select><br/>    
     <input type="submit" name="add" value="add">
 </form>
-<br />
+</section>
 
+<section class="column">
 ADD AUTHOR
 <form action="/authors/" method="post" id="author_form">
     {% csrf_token %}
@@ -25,16 +33,19 @@ ADD AUTHOR
     Last Name: <input type="text" name="last_name"><br />    
     <input type="submit" name="add" value="add">
 </form>
-<br />
+</section>
 
+<section class="column">
 ADD SUBJECT
 <form action="/subjects/" method="post" id="subject_form">
     {% csrf_token %}
     Name: <input type="text" name="name"><br />
     <input type="submit" name="add" value="add">
 </form>
-<br />
+</section>
+</section>
 
+<section class="quotecontainer">
 QUOTES
 <form action="/quotations/" method="get" id="quote_select_form">
     {% csrf_token %}
@@ -44,8 +55,8 @@ QUOTES
     </select><br/>    
     <input type="submit" name="filter" value="filter">
 </form>
-<div class="container">
 <ul id="quotelist"></ul>
+</section>
 </div>
 
 <script src="{% static 'quotationsAPI/js/jquery-1.11.1.min.js' %}"></script>

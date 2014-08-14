@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from quotations.serializers import UserSerializer, GroupSerializer
@@ -69,7 +68,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
             subject = self.request.DATA.get('name', '1')
             subject_qs = Subject.objects.get(pk=subject)
 
-            return_qs = subject_qs.quotes.add(quote_qs)
+            subject_qs.quotes.add(quote_qs)
             return Response({"message":"quote added to subject"})
         else:
             Subject.objects.create(name=request.DATA.get('name')) #not getting name
