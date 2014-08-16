@@ -64,7 +64,6 @@ class SubjectViewSet(viewsets.ModelViewSet):
             quote = self.request.DATA.get('text', '')
             quote_qs = Quote.objects.create(text=quote, author=author_qs)
 
-            import ipdb; ipdb.set_trace()
             subjects = self.request.DATA.getlist('name[]', '1')
             for subject in subjects:
                 subject_qs = Subject.objects.get(pk=subject)
@@ -72,6 +71,6 @@ class SubjectViewSet(viewsets.ModelViewSet):
 
             return Response({"message":"quote added to subject(s)"})
         else:
-            Subject.objects.create(name=request.DATA.get('name')) #not getting name
+            Subject.objects.create(name=request.DATA.get('name'))
             return Response({"message":"subject created"})
 
