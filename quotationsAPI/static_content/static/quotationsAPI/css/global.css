@@ -105,6 +105,10 @@ a {
     color: #fafafa;
 }
 
+select {
+    vertical-align: top;
+}
+
 /* these need to go at the bottom */
 /* work down from biggest to smallest? */
 

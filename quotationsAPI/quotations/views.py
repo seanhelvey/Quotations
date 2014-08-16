@@ -45,7 +45,6 @@ class QuoteViewSet(viewsets.ModelViewSet):
             subject = self.request.GET.get('subject', '1')
             subject_qs = Subject.objects.get(pk=subject)
 
-            # quote_qs = Quote.objects.filter(author=author_qs)
             return subject_qs.quotes.filter(author=author_qs)
         else:
             return Quote.objects.all()
@@ -65,11 +64,13 @@ class SubjectViewSet(viewsets.ModelViewSet):
             quote = self.request.DATA.get('text', '')
             quote_qs = Quote.objects.create(text=quote, author=author_qs)
 
-            subject = self.request.DATA.get('name', '1')
-            subject_qs = Subject.objects.get(pk=subject)
+            import ipdb; ipdb.set_trace()
+            subjects = self.request.DATA.getlist('name[]', '1')
+            for subject in subjects:
+                subject_qs = Subject.objects.get(pk=subject)
+                subject_qs.quotes.add(quote_qs)
 
-            subject_qs.quotes.add(quote_qs)
-            return Response({"message":"quote added to subject"})
+            return Response({"message":"quote added to subject(s)"})
         else:
             Subject.objects.create(name=request.DATA.get('name')) #not getting name
             return Response({"message":"subject created"})

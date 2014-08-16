@@ -1,52 +1,36 @@
 $( document ).ready(function() {
 
-	function get_all_authors() {
-		get_authors("author_select_1");
-		get_authors("author_select_2");			
-	}
-
-	function get_all_subjects() {
-		get_subjects("subject_select_1");	
-		get_subjects("subject_select_2");		
-	}
-
-	//GET
-	function get_quotations(url) {
-		if(arguments.length == 1) {
-			url = url;
-		} else {
-			url = "/quotations/";
-		}
-		$.get( url, function( data ) {
+	function get_quotations(params) {
+		$.get( "/quotations/", params, function( data ) {
 			results = data['results'];
 			$("li").remove();			
-			for (var i=0; i<results.length; i++) {
+			for (var i=0; i < results.length; i++) {
 				$( "#quotelist" ).append( '<li>' + results[i]['text'] + '</li>' );	  	
 			}
 		});		
 	}
 
-	function get_authors(selector) {
+	function get_authors() {
 		$.get( "/authors/", function( data ) {
 			results = data['results'];
-			$("#" + selector + " option").remove();			
-			for (var i=0; i<results.length; i++) {
-				$( "#" + selector ).append( '<option value=' + results[i]['id'] + '>' + results[i]['first_name'] + " " + results[i]['last_name'] + '</option>' );	  	
+			$("select[id^='author_select']").find('option').remove();
+			for (var i=0; i < results.length; i++) {
+				$( "select[id^='author_select']" ).append( '<option value=' + results[i]['id'] + '>' + results[i]['first_name'] + " " + results[i]['last_name'] + '</option>' );	  						
 			}
 		});		
 	}	
 
-	function get_subjects(selector) {
+	function get_subjects() {
 		$.get( "/subjects/", function( data ) {
 			results = data['results'];
-			$("#" + selector + " option").remove();			
-			for (var i=0; i<results.length; i++) {
-				$( "#" + selector ).append( '<option value=' + results[i]['id'] + '>' + results[i]['name'] + '</option>' );	  	
+			$("select[id^='subject_select']").find('option').remove();
+			for (var i=0; i < results.length; i++) {
+				$( "select[id^='subject_select']" ).append( '<option value=' + results[i]['id'] + '>' + results[i]['name'] + '</option>' );
 			}
 		});		
 	}	
 
-	//POST
+	/* setup CSRF token for posts */
 	var csrftoken = $.cookie('csrftoken');
 	function csrfSafeMethod(method) {
 	    // these HTTP methods do not require CSRF protection
@@ -62,12 +46,16 @@ $( document ).ready(function() {
 
 	$( "#quote_form" ).submit(function(e) {
 		e.preventDefault(); //prevent submission
+		
 		$.ajax({
 			type: "POST",
 			url: "/subjects/", //this is how we add quote to subject manytomany
 			data: {text: $("#add_quote_text").val(), name: $("#subject_select_1").val(), author: $("#author_select_1").val()},
-			success: function() { get_quotations(); }
-		});	
+			success: function() { get_quotations({
+				author: $("#author_select_2").val(),
+				subject: $("#subject_select_2").val()
+			});
+		}});	
 
 		return false; //avoid redirection
 	});	
@@ -78,7 +66,7 @@ $( document ).ready(function() {
 			type: "POST",
 			url: "/authors/",
 			data: $( "#author_form" ).serialize(),
-			success: function() { get_all_authors(); }
+			success: function() { get_authors(); }
 		});
 		return false; //avoid redirection
 	});		
@@ -89,7 +77,7 @@ $( document ).ready(function() {
 			type: "POST",
 			url: "/subjects/",
 			data: $( "#subject_form" ).serialize(),
-			success: function() { get_all_subjects(); }
+			success: function() { get_subjects(); }
 		});
 		return false; //avoid redirection
 	});		
@@ -97,12 +85,15 @@ $( document ).ready(function() {
 
 	$( "#quote_select_form" ).submit(function(e) {
 		e.preventDefault(); //prevent submission
-		get_quotations("/quotations/?author=" + $("#author_select_2").val() + "&subject=" + $("#subject_select_2").val());
+		get_quotations({
+			author: $("#author_select_2").val(),
+			subject: $("#subject_select_2").val()
+		});
 		return false; //avoid redirection
 	});		
 
 	get_quotations();
-	get_all_authors();
-	get_all_subjects();		
+	get_authors();
+	get_subjects();		
 
 });
