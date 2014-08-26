@@ -2,65 +2,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quotations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quotations</title>      
     <link rel="stylesheet" href="{% static 'quotationsAPI/css/reset.css' %}"/>    
-    <link rel="stylesheet" href="{% static 'quotationsAPI/css/global.css' %}"/>        
+    <link rel="stylesheet" href="{% static 'quotationsAPI/css/global.css' %}"/>            
+    <link rel="stylesheet" href="{% static 'quotationsAPI/css/bootstrap.min.css' %}"/>    
+    <link rel="stylesheet" href="{% static 'quotationsAPI/css/bootstrap-theme.min.css' %}"/>   
+    <link rel="stylesheet" href="{% static 'quotationsAPI/css/bootstrap-select.min.css' %}"/>       
 </head>
 <body>
-
-<div class="wrapper">
-<section class="container">
-<h1>Quotations</h1>
-<h2>Single-Page App Juxtaposition</h2>
-<section class="column">
-ADD QUOTE
-<form action="/quotations/" method="post" id="quote_form">
-    {% csrf_token %}
-    Text: <input type="text" name="text" id="add_quote_text"><br />
-    Author: <select name="author" id="author_select_1">
-    </select><br/>
-    Subject: <select multiple name="subject[]" id="subject_select_1">
-    </select>
-    <input type="submit" name="add" value="add">
-</form>
-</section>
-
-<section class="column">
-ADD AUTHOR
-<form action="/authors/" method="post" id="author_form">
-    {% csrf_token %}
-    First Name: <input type="text" name="first_name"><br />
-    Last Name: <input type="text" name="last_name"><br />    
-    <input type="submit" name="add" value="add">
-</form>
-</section>
-
-<section class="column">
-ADD SUBJECT
-<form action="/subjects/" method="post" id="subject_form">
-    {% csrf_token %}
-    Name: <input type="text" name="name"><br />
-    <input type="submit" name="add" value="add">
-</form>
-</section>
-</section>
-
-<section class="quotecontainer">
-QUOTES
-<form action="/quotations/" method="get" id="quote_select_form">
-    {% csrf_token %}
-    Author: <select name="author" id="author_select_2">
-    </select><br/>
-    Subject: <select name="subject" id="subject_select_2">
-    </select><br/>    
-    <input type="submit" name="filter" value="filter">
-</form>
-<ul id="quotelist"></ul>
-</section>
-</div>
-
-<script src="{% static 'quotationsAPI/js/jquery-1.11.1.min.js' %}"></script>
-<script src="{% static 'quotationsAPI/js/jquery.cookie.js' %}"></script>
-<script src="{% static 'quotationsAPI/js/app.js' %}"></script>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Quotations</h1>
+            <p>jQuery | Backbone | Angular w/ Django REST Framework</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="center-block">
+                    <div class="page-header">
+                        <h3>ADD QUOTE</h3>
+                    </div>
+                    <form action="/quotations/" method="post" id="quote_form">
+                        {% csrf_token %}
+                        <div id="input-outer-wrapper">
+                            <div id="input-inner-wrapper">
+                            <h4><span class="label label-info">Text</span></h4><br/>
+                            <input type="text" name="text" id="add_quote_text"><br/>
+                            <h4><span class="label label-info">Author</span></h4>
+                            <select name="author" class="selectpicker" id="author_select_1">
+                            </select><br/>
+                            <h4><span class="label label-info">Subject</span></h4>
+                            <select multiple name="subject[]" class="selectpicker" id="subject_select_1">
+                            </select>
+                            <input type="submit" name="add" value="add">
+                            </div>
+                        </div>
+                </form>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="center-block">
+                    <div class="page-header">
+                        <h3>ADD AUTHOR</h3>
+                    </div>
+                    <form action="/authors/" method="post" id="author_form">
+                        {% csrf_token %}
+                        First Name: <input type="text" name="first_name"><br/>
+                        Last Name: <input type="text" name="last_name"><br/>    
+                        <input type="submit" name="add" value="add">
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="center-block">
+                    <div class="page-header">
+                        <h3>ADD SUBJECT</h3>
+                    </div>
+                    <form action="/subjects/" method="post" id="subject_form">
+                        {% csrf_token %}
+                        Name: <input type="text" name="name"><br/>
+                        <input type="submit" name="add" value="add">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="center-block">        
+            <div class="page-header">
+                <h3>QUOTES</h3>
+            </div>        
+            <div class="col-sm-6">
+                <div class="center-block">
+                <form action="/quotations/" method="get" id="quote_select_form">
+                    {% csrf_token %}
+                    Author: <select name="author" class="selectpicker" id="author_select_2">
+                    </select><br/>
+                    Subject: <select name="subject" class="selectpicker" id="subject_select_2">
+                    </select><br/>    
+                    <input type="submit" name="filter" value="filter">
+                </form>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="center-block">                
+                    <ul id="quotelist"></ul>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'quotationsAPI/js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'quotationsAPI/js/jquery.cookie.js' %}"></script>
+    <script src="{% static 'quotationsAPI/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'quotationsAPI/js/bootstrap-select.min.js' %}"></script>    
+    <script src="{% static 'quotationsAPI/js/app.js' %}"></script>        
 </body>
 </html>

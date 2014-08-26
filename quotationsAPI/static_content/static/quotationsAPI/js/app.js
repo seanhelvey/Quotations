@@ -1,3 +1,5 @@
+'use strict';
+
 function get_quotations(params) {
 	$.get( "/quotations/", params, function( data ) {
 		var results = data['results'];
@@ -15,6 +17,7 @@ function get_authors() {
 		for (var i=0; i < results.length; i++) {
 			$( "select[id^='author_select']" ).append( '<option value=' + results[i]['id'] + '>' + results[i]['first_name'] + " " + results[i]['last_name'] + '</option>' );	  						
 		}
+		$( ".selectpicker" ).selectpicker("refresh");	
 	});		
 }	
 
@@ -25,6 +28,7 @@ function get_subjects() {
 		for (var i=0; i < results.length; i++) {
 			$( "select[id^='subject_select']" ).append( '<option value=' + results[i]['id'] + '>' + results[i]['name'] + '</option>' );
 		}
+		$( ".selectpicker" ).selectpicker("refresh");		
 	});		
 }	
 
@@ -96,5 +100,5 @@ $( document ).ready(function() {
 		subject: 1
 	});
 	get_authors();
-	get_subjects();		
+	get_subjects();	
 });
